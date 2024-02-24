@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, FormControl, FormLabel, Input, VStack, useToast } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input, Select, VStack, useToast } from "@chakra-ui/react";
 import { FaExchangeAlt } from "react-icons/fa";
 
 const Index = () => {
+  const [email, setEmail] = useState("");
   const [amountPHPT, setAmountPHPT] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [username, setUsername] = useState("");
   const toast = useToast();
 
   const handleSubmit = async (event) => {
@@ -14,7 +17,10 @@ const Index = () => {
       const response = await fetch(webhookUrl, {
         method: "POST",
         body: JSON.stringify({
+          email: email,
           amountPHPT: amountPHPT,
+          currency: currency,
+          ...(currency === "CHIPS" && { username: username }),
         }),
         headers: {
           "Content-Type": "application/json",
@@ -56,13 +62,33 @@ const Index = () => {
   return (
     <Box p={8}>
       <VStack as="form" spacing={4} onSubmit={handleSubmit}>
-        <FormControl isRequired>
-          <FormLabel htmlFor="amountPHPT">Amount in PHPT</FormLabel>
-          <Input id="amountPHPT" type="number" value={amountPHPT} onChange={(e) => setAmountPHPT(e.target.value)} placeholder="Enter amount in PHPT" />
+        <FormControl id="email" isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
         </FormControl>
-        <Button leftIcon={<FaExchangeAlt />} colorScheme="teal" type="submit" isLoading={false} loadingText="Submitting">
-          Submit Exchange Request
+        <FormControl id="amount" isRequired>
+          <FormLabel>Amount in PHPT</FormLabel>
+          <Input type="number" value={amountPHPT} onChange={(e) => setAmountPHPT(e.target.value)} placeholder="Enter amount in PHPT" />
+        </FormControl>
+        {currency === "CHIPS" && (
+          <FormControl id="username" isRequired>
+            <FormLabel>Username</FormLabel>
+            <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username for CHIPS" />
+          </FormControl>
+        )}
+        <FormControl id="currency" isRequired>
+          <FormLabel>Exchange Currency</FormLabel>
+          <Select value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="Select currency">
+            <option value="AED">AED</option>
+            <option value="PHP">PHP</option>
+            <option value="CHIPS">CHIPS</option>
+          </Select>
+        </FormControl>
+        {/* Conditional rendering for username field */}
+        <Button colorScheme="teal" type="submit">
+          Submit
         </Button>
+        {/* Add the modal popup logic here */}
       </VStack>
     </Box>
   );
