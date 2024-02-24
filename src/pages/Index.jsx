@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, FormControl, FormLabel, Input, Select, VStack, useToast } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input, Select, VStack, Heading, useToast } from "@chakra-ui/react";
 import { FaExchangeAlt } from "react-icons/fa";
 
 const Index = () => {
@@ -60,37 +60,42 @@ const Index = () => {
   };
 
   return (
-    <Box p={8}>
-      <VStack as="form" spacing={4} onSubmit={handleSubmit}>
-        <FormControl id="email" isRequired>
-          <FormLabel>Email</FormLabel>
-          <Input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
-        </FormControl>
-        <FormControl id="amount" isRequired>
-          <FormLabel>Amount in PHPT</FormLabel>
-          <Input type="number" value={amountPHPT} onChange={(e) => setAmountPHPT(e.target.value)} placeholder="Enter amount in PHPT" />
-        </FormControl>
-        {currency === "CHIPS" && (
-          <FormControl id="username" isRequired>
-            <FormLabel>Username</FormLabel>
-            <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username for CHIPS" />
+    <VStack p={8} align="center">
+      <Heading size="lg" mb={6}>
+        Team Pogi PHPT Exchange
+      </Heading>
+      <Box p={8} borderWidth="1px" borderRadius="lg" boxShadow="xl" w="full" maxW="md">
+        <VStack as="form" spacing={4} onSubmit={handleSubmit}>
+          <FormControl id="email" isRequired>
+            <FormLabel>Email</FormLabel>
+            <Input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
           </FormControl>
-        )}
-        <FormControl id="currency" isRequired>
-          <FormLabel>Exchange Currency</FormLabel>
-          <Select value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="Select currency">
-            <option value="AED">AED</option>
-            <option value="PHP">PHP</option>
-            <option value="CHIPS">CHIPS</option>
-          </Select>
-        </FormControl>
-        {/* Conditional rendering for username field */}
-        <Button colorScheme="teal" type="submit">
-          Submit
-        </Button>
-        {/* Add the modal popup logic here */}
-      </VStack>
-    </Box>
+          <FormControl id="amount" isRequired>
+            <FormLabel>Amount in PHPT</FormLabel>
+            <Input type="number" value={amountPHPT} onChange={(e) => setAmountPHPT(e.target.value)} placeholder="Enter amount in PHPT" />
+          </FormControl>
+          {currency === "CHIPS" && (
+            <FormControl id="username" isRequired>
+              <FormLabel>Username</FormLabel>
+              <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username for CHIPS" />
+            </FormControl>
+          )}
+          <FormControl id="currency" isRequired>
+            <FormLabel>Exchange Currency</FormLabel>
+            <Select value={currency} onChange={(e) => setCurrency(e.target.value)} placeholder="Select currency">
+              <option value="AED">AED</option>
+              <option value="PHP">PHP</option>
+              <option value="CHIPS">CHIPS</option>
+            </Select>
+          </FormControl>
+          {/* Conditional rendering for username field */}
+          <Button colorScheme="teal" type="submit">
+            Submit
+          </Button>
+          {/* Add the modal popup logic here */}
+        </VStack>
+      </Box>
+    </VStack>
   );
 };
 
