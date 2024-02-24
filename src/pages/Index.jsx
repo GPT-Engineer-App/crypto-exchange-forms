@@ -11,20 +11,21 @@ const Index = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const webhookUrl = "https://hooks.zapier.com/hooks/catch/16946926/3e749lm/";
+    // Mock function to simulate a fetch request
+    const simulateFetch = (data) => {
+      console.log("Request data:", data);
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ ok: true }), 1000); // Simulating network response delay
+      });
+    };
 
     try {
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          amountPHPT: amountPHPT,
-          currency: currency,
-          ...(currency === "CHIPS" && { username: username }),
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      // Simulate the network request
+      const response = await simulateFetch({
+        email: email,
+        amountPHPT: amountPHPT,
+        currency: currency,
+        ...(currency === "CHIPS" && { username: username }),
       });
 
       if (response.ok) {
